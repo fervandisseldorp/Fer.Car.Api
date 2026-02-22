@@ -1,5 +1,7 @@
 using DotNetEnv;
 using Npgsql;
+using Fer.Car.Domain.Cars;
+using Fer.Car.Repository;
 
 Env.Load();
 
@@ -17,11 +19,13 @@ dataSourceBuilder.UseVector();
 var dataSource = dataSourceBuilder.Build();
 
 builder.Services.AddSingleton<NpgsqlDataSource>(dataSource);
-
 builder.Services.AddControllers();
+
+// register domain services from domain project
+builder.Services.AddCarServices();
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 app.MapControllers();
-
 
 app.Run();

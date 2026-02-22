@@ -1,3 +1,5 @@
 <Solution>
   <Project Path="Fer.Car.Api/Fer.Car.Api.csproj" />
+  <Project Path="Fer.Car.Domain/Fer.Car.Domain.csproj" Id="dc56906a-87be-4edb-961a-0b2294aef4d6" />
+  <Project Path="Fer.Car.Repository/Fer.Car.Repository.csproj" Id="dc2fd51c-bec0-465e-a19a-5ec5ea0ca2c7" />
 </Solution>

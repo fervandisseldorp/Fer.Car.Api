@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -15,6 +15,10 @@
     <PackageReference Include="Npgsql" Version="10.0.1" />
     <PackageReference Include="OpenAI" Version="2.8.0" />
     <PackageReference Include="Pgvector" Version="0.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fer.Car.Domain\Fer.Car.Domain.csproj" />
   </ItemGroup>
 
 </Project>
