@@ -1,29 +1,32 @@
 ﻿using Fer.Car.Repository.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fer.Car.Repository.Repositories.Implementations;
 
 public class CarRepository : ICarRepository
 {
+    private readonly AppDbContext dbContext;
+
+    public CarRepository(AppDbContext dbContext)
+    {
+        this.dbContext = dbContext;
+    }
+
+    public async Task AddRangeAsync(IEnumerable<Entities.Car> cars, CancellationToken cancellationToken = default)
+    {
+        await dbContext.Cars.AddRangeAsync(cars, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public IQueryable<Entities.Car> GetCars()
     {
-        var list = new List<Entities.Car>
-        {
-            new Entities.Car
-            {
-                Id = Guid.NewGuid(),
-                Brand = "Toyota",
-                LicensePlateNumber = "SZ388G",
-                NumberOfSeats = 5
-            },
-            new Entities.Car
-            {
-                Id = Guid.NewGuid(),
-                Brand = "Dacia",
-                LicensePlateNumber = "SZ390T",
-                NumberOfSeats = 4
-            }
-        };
+        return dbContext.Cars.AsNoTracking();
+    }
 
-        return list.AsQueryable();
+    public async Task<bool> ExistsByLicensePlateAsync(string licensePlateNumber, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Cars
+            .AsNoTracking()
+            .AnyAsync(c => c.LicensePlateNumber == licensePlateNumber, cancellationToken);
     }
 }

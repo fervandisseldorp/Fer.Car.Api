@@ -1,7 +1,8 @@
 using DotNetEnv;
-using Npgsql;
 using Fer.Car.Domain.Cars;
 using Fer.Car.Repository;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 Env.Load();
 
@@ -23,7 +24,7 @@ builder.Services.AddControllers();
 
 // register domain services from domain project
 builder.Services.AddCarServices();
-builder.Services.AddRepositories();
+builder.Services.AddRepositories(builder.Configuration);
 
 var app = builder.Build();
 app.MapControllers();
