@@ -27,4 +27,15 @@ public class CarController : ControllerBase
     {
         return _carService.GetCar(carId);
     }
+
+    [HttpPost("import")]
+    public async Task<IActionResult> Import(IFormFile file, CancellationToken cancellationToken)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("Excel file is required.");
+
+        using var stream = file.OpenReadStream();
+        await _carService.ImportFromCsvAsync(stream, cancellationToken);
+        return Accepted();
+    }
 }
