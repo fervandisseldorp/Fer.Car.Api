@@ -6,14 +6,9 @@ namespace Fer.Car.Api.Controllers.Car;
 
 [ApiController]
 [Route("cars")]
-public class CarController : ControllerBase
+public class CarController(ICarService carService) : ControllerBase
 {
-    private readonly ICarService _carService;
-
-    public CarController(ICarService carService)
-    {
-        _carService = carService;
-    }
+    private readonly ICarService _carService = carService;
 
     [HttpGet]
     public IEnumerable<CarModel> GetCars()
