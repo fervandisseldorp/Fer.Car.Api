@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Fer.Car.Domain.Cars.Services.interfaces;
-using Fer.Car.Domain.Cars.Services.Implementation;
+using Fer.Car.Domain.Cars.Services.Implementations;
 
 namespace Fer.Car.Domain.Cars;
 

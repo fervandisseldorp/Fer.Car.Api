@@ -6,18 +6,12 @@ using System.Globalization;
 using System.Text;
 
 
-namespace Fer.Car.Domain.Cars.Services.Implementation;
+namespace Fer.Car.Domain.Cars.Services.Implementations;
 
-public class CarService : ICarService
+public class CarService(ICarRepository carRepository) : ICarService
 {
-    private readonly ICarRepository carRepository;
-    private readonly CarImportOptions importOptions;
+    private readonly ICarRepository carRepository = carRepository;
     private readonly int BatchSize = 50;
-
-    public CarService(ICarRepository carRepository)
-    {
-        this.carRepository = carRepository;
-    }
 
     public IEnumerable<CarModel> GetCars()
     {
@@ -45,8 +39,7 @@ public class CarService : ICarService
 
     public async Task ImportFromCsvAsync(Stream csvStream, CancellationToken cancellationToken = default)
     {
-        if (csvStream == null)
-            throw new ArgumentNullException(nameof(csvStream));
+        ArgumentNullException.ThrowIfNull(csvStream);
 
         csvStream.Position = 0;
 
@@ -70,7 +63,7 @@ public class CarService : ICarService
 
         var carsBuffer = new List<Repository.Entities.Car>(BatchSize);
 
-        await foreach (var row in csv.GetRecordsAsync<CarCsvRow>())
+        await foreach (var row in csv.GetRecordsAsync<CarCsvRow>(cancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
 
