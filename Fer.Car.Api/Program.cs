@@ -16,7 +16,6 @@ Database=postgres;
 SSL Mode=Require;";
 
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connString);
-dataSourceBuilder.UseVector();
 var dataSource = dataSourceBuilder.Build();
 
 builder.Services.AddSingleton<NpgsqlDataSource>(dataSource);
